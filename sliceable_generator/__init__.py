@@ -80,7 +80,7 @@ class SliceableGenerator(Generic[ChildType]):
         else:
             raise TypeError(type(item).__name__)
 
-    def to_list(self) -> List[List, ChildType]:
+    def to_list(self) -> List[Union[List, ChildType]]:
         return list(self) if self.__depth == 1 else [i.to_list() for i in self]
 
     def __repr__(self):
