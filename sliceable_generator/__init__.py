@@ -87,7 +87,7 @@ class SliceableGenerator(Generic[ChildType]):
         return f'{self.__class__.__name__}[cached: {", ".join(map(str, self.__cached_data))}]'
 
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __author__ = 'panhaoyu'
 __email__ = 'panhaoyu.china@outlook.com'
 
