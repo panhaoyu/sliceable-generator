@@ -1,8 +1,10 @@
 from itertools import islice
-from typing import Iterable
+from typing import Iterable, TypeVar, Union, List, Generic
+
+ChildType = TypeVar('ChildType')
 
 
-class SliceableGenerator:
+class SliceableGenerator(Generic[ChildType]):
     """
     A generator supports reusing and slicing.
     Wrap a builtin generator to get more functions.
@@ -12,7 +14,7 @@ class SliceableGenerator:
         Read README.md for more information.
     """
 
-    def __init__(self, data: Iterable, depth=1):
+    def __init__(self, data: Iterable[ChildType], depth=1):
         """Convert a generator to a new reusable and subscriptable generator.
 
         Args:
@@ -28,14 +30,14 @@ class SliceableGenerator:
     def __next__(self):
         raise NotImplementedError('Sliceable generator is reusable, so without inner state.')
 
-    def __iter__(self):
+    def __iter__(self) -> Iterable[ChildType]:
         yield from self.__cached_data
         yield from (self.__cached_data.append(datum) or datum for datum in self.__data)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len([_ for _ in self])
 
-    def __getitem__(self, item):
+    def __getitem__(self, item) -> Union['SliceableGenerator[ChildType]', ChildType]:
         # for slice, call standard library and return a new generator with the same depth
         if isinstance(item, slice):
             start, stop, step = item.start, item.stop, item.step
@@ -78,14 +80,14 @@ class SliceableGenerator:
         else:
             raise TypeError(type(item).__name__)
 
-    def to_list(self):
+    def to_list(self) -> List[List, ChildType]:
         return list(self) if self.__depth == 1 else [i.to_list() for i in self]
 
     def __repr__(self):
         return f'{self.__class__.__name__}[cached: {", ".join(map(str, self.__cached_data))}]'
 
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __author__ = 'panhaoyu'
 __email__ = 'panhaoyu.china@outlook.com'
 

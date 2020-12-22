@@ -80,7 +80,7 @@ This is a tiny package and if you want to contribute, just raise a pull request,
 and any proposals are welcome!
 
 ## History
-
+* v0.1.1: add type hint
 * v0.1.0: finish basic logic
     * length of generator
     * reusable generator
