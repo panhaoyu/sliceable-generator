@@ -85,7 +85,7 @@ class SliceableGenerator:
         return f'{self.__class__.__name__}[cached: {", ".join(map(str, self.__cached_data))}]'
 
 
-version = '0.0.1'
+version = '0.1.0'
 
 if __name__ == '__main__':
     import doctest
