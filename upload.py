@@ -1,8 +1,8 @@
 import os
 import shutil
 
-os.system('python setup.py sdist bdist_wheel')
-os.system('twine upload dist/*')
+[print(i) for i in os.popen('python setup.py sdist bdist_wheel').read()]
+[print(i) for i in os.popen('twine upload dist/*').read()]
 shutil.rmtree('dist')
 shutil.rmtree('build')
 shutil.rmtree('sliceable_generator.egg-info')
